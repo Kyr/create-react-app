@@ -38,6 +38,7 @@ const eslint = require('eslint');
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
+const distNaming = require('./distNaming');
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -180,22 +181,14 @@ module.exports = function(webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? '[name].[contenthash:8].js'
-        : isEnvDevelopment && 'bundle.js',
-/*
-        ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
-*/
+        ? distNaming.output.production.filename
+        : isEnvDevelopment && distNaming.output.development.filename,
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? '[name].[contenthash:8].chunk.js'
-        : isEnvDevelopment && '[name].chunk.js',
-/*
-        ? 'static/js/[name].[contenthash:8].chunk.js'
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
-*/
+        ? distNaming.output.production.chunkFilename
+        : isEnvDevelopment && distNaming.output.development.chunkFilename,
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
@@ -392,10 +385,7 @@ module.exports = function(webpackEnv) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: imageInlineSizeLimit,
-                name: '[name].[hash:8].[ext]',
-/*
-                name: 'static/media/[name].[hash:8].[ext]',
-*/
+                name: distNaming.media.filename,
               },
             },
             // Process application JS with Babel.
@@ -565,10 +555,7 @@ module.exports = function(webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                name: '[name].[hash:8].[ext]',
-/*
-                name: 'static/media/[name].[hash:8].[ext]',
-*/
+                name: distNaming.files.filename,
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -641,12 +628,8 @@ module.exports = function(webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: '[name].[contenthash:8].css',
-          chunkFilename: '[name].[contenthash:8].chunk.css',
-/*
-          filename: 'static/css/[name].[contenthash:8].css',
-          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-*/
+          filename: distNaming.css.filename,
+          chunkFilename: distNaming.css.chunkFilename,
         }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
