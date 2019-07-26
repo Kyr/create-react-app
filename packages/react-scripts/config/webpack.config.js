@@ -38,7 +38,9 @@ const eslint = require('eslint');
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
+const postcssNestingRules = require('postcss-nesting');
 const distNaming = require('./distNaming');
+const overrides = require('./overrides');
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -119,6 +121,7 @@ module.exports = function(webpackEnv) {
             // so that it honors browserslist config in package.json
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
+            postcssNestingRules(),
           ],
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
@@ -163,10 +166,13 @@ module.exports = function(webpackEnv) {
       // Note: instead of the default WebpackDevServer client, we use a custom one
       // to bring better experience for Create React App users. You can replace
       // the line below with these two lines if you prefer the stock client:
-      // require.resolve('webpack-dev-server/client') + '?/',
-      // require.resolve('webpack/hot/dev-server'),
+      require.resolve('webpack-dev-server/client') + `?https://localhost:3000`,
+      require.resolve('webpack/hot/dev-server'),
+      /*
       isEnvDevelopment &&
         require.resolve('react-dev-utils/webpackHotDevClient'),
+*/
+
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
@@ -279,6 +285,8 @@ module.exports = function(webpackEnv) {
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       runtimeChunk: true,
+
+      ...overrides.optimization,
     },
     resolve: {
       // This allows you to set a fallback for where Webpack should look for modules.
