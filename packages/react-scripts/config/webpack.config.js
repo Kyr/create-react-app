@@ -429,6 +429,7 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-end
                 plugins: [
                   [
+                    require.resolve('plugin-proposal-optional-chaining'),
                     require.resolve('babel-plugin-named-asset-import'),
                     {
                       loaderMap: {
