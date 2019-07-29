@@ -174,12 +174,20 @@ module.exports = function(webpackEnv) {
       filename: isEnvProduction
         ? distNaming.output.production.filename
         : isEnvDevelopment && distNaming.output.development.filename,
+      /*
+        ? 'static/js/[name].[contenthash:8].js'
+        : isEnvDevelopment && 'static/js/bundle.js',
+      */
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? distNaming.output.production.chunkFilename
         : isEnvDevelopment && distNaming.output.development.chunkFilename,
+      /*
+        ? 'static/js/[name].[contenthash:8].chunk.js'
+        : isEnvDevelopment && 'static/js/[name].chunk.js',
+      */
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
@@ -354,6 +362,9 @@ module.exports = function(webpackEnv) {
               options: {
                 limit: 10000,
                 name: distNaming.media.filename,
+                /*
+                name: distNaming.media.filename,
+*/
               },
             },
             // Process application JS with Babel.
@@ -523,6 +534,9 @@ module.exports = function(webpackEnv) {
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
                 name: distNaming.files.filename,
+                /*
+                name: distNaming.files.filename,
+                */
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -597,6 +611,10 @@ module.exports = function(webpackEnv) {
           // both options are optional
           filename: distNaming.css.filename,
           chunkFilename: distNaming.css.chunkFilename,
+          /*
+            filename: 'static/css/[name].[contenthash:8].css',
+            chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+          */
         }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
