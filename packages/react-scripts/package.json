@@ -1,10 +1,10 @@
 {
-  "name": "@mgg/react-scripts",
-  "version": "3.1.0",
-  "description": "Megogo edition. Configuration and scripts for Create React App.",
+  "name": "@kfed/react-scripts",
+  "version": "3.1.0-rc1",
+  "description": "Custom edition. Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.x2sy.com/awesome_frontend/creact-react-app.git",
+    "url": "https://github.com/Kyr/creact-react-app.git",
     "directory": "packages/react-scripts"
   },
   "license": "MIT",
