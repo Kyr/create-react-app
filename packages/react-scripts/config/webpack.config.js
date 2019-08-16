@@ -261,6 +261,7 @@ module.exports = function(webpackEnv) {
               ascii_only: true,
             },
           },
+          // Enable file caching
           cache: cacheDirectory('terser-plugin'),
           sourceMap: shouldUseSourceMap,
         }),
