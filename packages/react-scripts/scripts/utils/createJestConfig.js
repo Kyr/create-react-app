@@ -11,6 +11,7 @@ const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const paths = require('../../config/paths');
 const modules = require('../../config/modules');
+const cacheDirectory = require('../../config/cacheDirectory');
 
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
@@ -64,6 +65,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       'jest-watch-typeahead/filename',
       'jest-watch-typeahead/testname',
     ],
+    cacheDirectory: cacheDirectory('jest'),
   };
   if (rootDir) {
     config.rootDir = rootDir;

@@ -41,6 +41,7 @@ const postcssNormalize = require('postcss-normalize');
 const postcssNestingRules = require('postcss-nesting');
 const distNaming = require('./distNaming');
 const overrides = require('./overrides');
+const cacheDirectory = require('./cacheDirectory');
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -261,7 +262,7 @@ module.exports = function(webpackEnv) {
           // https://github.com/webpack-contrib/terser-webpack-plugin/issues/21
           parallel: !isWsl,
           // Enable file caching
-          cache: true,
+          cache: cacheDirectory('terser-plugin'),
           sourceMap: shouldUseSourceMap,
         }),
         // This is only used in production mode
@@ -449,7 +450,7 @@ module.exports = function(webpackEnv) {
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
-                cacheDirectory: true,
+                cacheDirectory: cacheDirectory('babel-loader'),
                 cacheCompression: isEnvProduction,
                 compact: isEnvProduction,
               },
@@ -470,7 +471,7 @@ module.exports = function(webpackEnv) {
                     { helpers: true },
                   ],
                 ],
-                cacheDirectory: true,
+                cacheDirectory: cacheDirectory('babel-loader') || true,
                 cacheCompression: isEnvProduction,
                 // @remove-on-eject-begin
                 cacheIdentifier: getCacheIdentifier(
