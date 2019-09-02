@@ -96,7 +96,17 @@ checkBrowsers(paths.appPath, isInteractive)
             ' to the line before.\n'
         );
       } else {
-        console.log(chalk.green('Compiled successfully.\n'));
+        const duration = stats.endTime - stats.startTime;
+        const [tier] = [
+          ['red', d => d >= 5 * 60 * 1000],
+          ['yellow', d => d >= 3 * 60 * 1000],
+          ['green', () => true],
+        ].find(([, t]) => t(duration));
+
+        console.log(chalk.green('Compiled successfully.'));
+        console.log(
+          chalk[tier]('Build time: ' + duration.toLocaleString() + ' ms.\n')
+        );
       }
 
       console.log('File sizes after gzip:\n');
