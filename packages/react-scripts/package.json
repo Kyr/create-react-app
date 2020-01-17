@@ -1,6 +1,6 @@
 {
   "name": "@kfed/react-scripts",
-  "version": "3.1.1-rc1",
+  "version": "3.1.1-rc2",
   "description": "Custom edition. Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
